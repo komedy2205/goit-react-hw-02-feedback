@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Controls from './Controls';
+import Statistics from './Statistics';
 
 class App extends Component {
   state = {
@@ -30,28 +32,29 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage() {
-    return (this.goodIncrement / 100) * this.countTotalFeedback()
+    return Math.round((this.state.good / this.countTotalFeedback()) * 100)
   };
 
   render() {
     return (
       <div>
-        <p>Please leave feedback</p>
-          <button type='button' onClick={this.goodIncrement}>good</button>
-          <button type='button' onClick={this.neutralIncrement}>neutral</button>
-          <button type='button' onClick={this.badIncrement}>bad</button>
-        
-        <p>Statistics</p>
-        
-        <span>Good: {this.state.good}</span> <br />
-        <span>Neutral: {this.state.neutral}</span> <br/>
-        <span>Bad: {this.state.bad}</span> <br/>
-        <span>Total: {this.countTotalFeedback() }</span> <br />
-        
-        <span>Positive feedback: {this.countPositiveFeedbackPercentage()}%</span>
-        </div>
-      )
-    }
-  }
+        <Controls
+          badIncrement={this.badIncrement}
+          goodIncrement={this.goodIncrement}
+          neutralIncrement={this.neutralIncrement} />
 
+        <p>Statistics</p>
+
+
+        <Statistics
+          good={this.state.good}
+          neutral={this.state.neutral}
+          bad={this.state.bad}
+          total={this.countTotalFeedback()}
+          feedbackPercentage={this.countPositiveFeedbackPercentage()}/>
+        
+        </div>
+    )
+  }
+}
 export default App;
