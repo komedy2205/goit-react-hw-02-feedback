@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import Controls from './Controls';
+import FeedbackOptions from './FeedbackOptions';
 import Statistics from './Statistics';
+import { Container } from './FeedbackOptions.styled';
+import { Section } from './FeedbackOptions.styled';
+
 
 class App extends Component {
   state = {
@@ -9,23 +12,12 @@ class App extends Component {
     bad: 0,
   };
 
-  goodIncrement = () => {
-    this.setState(goodPrevState => ({
-      good: goodPrevState.good + 1,
-    }));
-  }
-
-  neutralIncrement = () => {
-    this.setState(neutralPrevState => ({
-      neutral: neutralPrevState.neutral + 1,
-    }));
-  }
-
-  badIncrement = () => {
-    this.setState(badPrevState => ({
-      bad: badPrevState.bad + 1,
-    }));
-  }
+  
+  increment = type => {
+    this.setState(prevState => {
+      return { [type]: prevState[type] + 1 };
+    });
+  };
 
   countTotalFeedback() {
     return this.state.good + this.state.neutral + this.state.bad
@@ -36,24 +28,30 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <Controls
-          badIncrement={this.badIncrement}
-          goodIncrement={this.goodIncrement}
-          neutralIncrement={this.neutralIncrement} />
 
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const feedbackPercentage = this.countPositiveFeedbackPercentage();
+
+    return (
+      <Container>
+        <Section title="State section">
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.increment}
+          />
+        </Section>
         <p>Statistics</p>
 
-
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          feedbackPercentage={this.countPositiveFeedbackPercentage()}/>
-        
-        </div>
+        <Section title="State section">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            feedbackPercentage={feedbackPercentage}/>
+        </Section>
+      </Container>
     )
   }
 }
