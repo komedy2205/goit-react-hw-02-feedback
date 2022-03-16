@@ -32,6 +32,7 @@ class App extends Component {
     const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
     const feedbackPercentage = this.countPositiveFeedbackPercentage();
+      
 
     return (
       <Container>
@@ -44,12 +45,13 @@ class App extends Component {
         <p>Statistics</p>
 
         <Section title="State section">
-          <Statistics
+          {this.countTotalFeedback() && (<Statistics
             good={good}
             neutral={neutral}
             bad={bad}
             total={total}
-            feedbackPercentage={feedbackPercentage}/>
+            feedbackPercentage={feedbackPercentage} />
+          )}
         </Section>
       </Container>
     )

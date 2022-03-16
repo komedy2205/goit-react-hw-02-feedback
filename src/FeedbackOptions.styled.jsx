@@ -18,3 +18,11 @@ export const Section = styled.div`
 
 `;
 
+export const Button = styled.button`
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+
+    background-color: white;
+
+`;
