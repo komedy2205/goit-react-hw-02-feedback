@@ -45,13 +45,13 @@ class App extends Component {
         <p>Statistics</p>
 
         <Section title="State section">
-          {this.countTotalFeedback() && (<Statistics
+          {this.countTotalFeedback() ? (<Statistics
             good={good}
             neutral={neutral}
             bad={bad}
             total={total}
             feedbackPercentage={feedbackPercentage} />
-          )}
+          ) : "There is no feedback"}
         </Section>
       </Container>
     )
